@@ -13,5 +13,9 @@ def test_alarm(user_t):
     alarm_time = user_t.alarm_time("6:00am")
     assert alarm_time == "Josh, wakes up at 6:00am."
 
+def test_news_preference(user_t):
+    news_preference = user_t.news_preference('BBC Business')
+    assert news_preference == 'BBC Business'
+
 
 
