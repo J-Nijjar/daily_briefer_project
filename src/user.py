@@ -18,6 +18,9 @@ class User:
     def news_preference(self, news):
         return news
     
+    def stock_watchlist(self, stocks):
+        return stocks
+    
 
 # user1 = User("Josh", "Nijjar")
 
