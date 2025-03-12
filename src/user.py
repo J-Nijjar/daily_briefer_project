@@ -4,13 +4,15 @@ class User:
     """An object representing the user it's working with.
     """
 
-    def __init__(self, first, last, alarm, news_pref, stock_list, location):
+    def __init__(self, first, last, alarm, news_pref, stock_list, location,
+                 email):
         self.first = first
         self.last = last
         self.alarm = alarm
         self.news_pref = news_pref
         self.stock_list = stock_list
         self.location = location
+        self.email = email
 
         
     

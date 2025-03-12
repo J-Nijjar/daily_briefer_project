@@ -31,7 +31,6 @@ def get_credentials():
 
     return creds
 
-
 def get_meetings():
     creds = get_credentials()
     service = build('calendar', 'v3', credentials=creds)
@@ -58,8 +57,46 @@ def get_meetings():
     else:
         for events in event:
             start = events['start'].get('dateTime', events['start'].get('date'))
-            events_list.append([start, events['summary']])
+            # Parse the ISO datetime string and convert it to a more readable format
+            start_time = datetime.datetime.strptime(start, "%Y-%m-%dT%H:%M:%S%z")
+            readable_time = start_time.strftime("%I:%M %p")  # e.g., 10:30 AM
+            events_list.append([readable_time, events['summary']])
+
+    events_str = "\n".join([
+        f"{begin}: {title}" for begin, title in events_list
+    ])
 
     return events_list
 
+def get_meetings_as_plain_text():
+    events_result = get_meetings()
+
+    events_text = ""
+
+    if not events_result:
+        events_text = "- You have no events scheduled for today."
+    
+    else:
+        events_str = "\n".join([
+        f"{begin}: {title}" for begin, title in events_result])
+        
+    return events_str
+
+def get_meetings_as_html():
+    events_result = get_meetings()
+
+    events_html = ""
+
+    if not events_result:
+        events_html = "<li>You have no events scheduled for today.</li>"
+    else:
+        for event in events_result:
+            start = event[0]
+            title = event[1]
+            events_html += f"<li><strong>{start}</strong>: {title}</li>"
+
+    return events_html
+   
 # get_meetings()
+# print(get_meetings_as_html())
+# print(get_meetings_as_plain_text())
